@@ -1,0 +1,144 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc6e8bfec00608741bdd7f2115feeb3b, type: 3}
+  m_Name: PS4
+  m_EditorClassIdentifier: 
+  m_name: PS4
+  m_mapType: 2
+  m_buttonCount: 22
+  m_buttons:
+  - m_input: X(PS4)
+    m_key: X
+  - m_input: Square(PS4)
+    m_key: Square
+  - m_input: Circle(PS4)
+    m_key: Circle
+  - m_input: Triangle(PS4)
+    m_key: Triangle
+  - m_input: L1(PS4)
+    m_key: L1
+  - m_input: L2A(PS4)
+    m_key: L2A
+  - m_input: L2B(PS4)
+    m_key: L2B
+  - m_input: L3(PS4)
+    m_key: L3
+  - m_input: R1(PS4)
+    m_key: R1
+  - m_input: R2A(PS4)
+    m_key: R2A
+  - m_input: R2B(PS4)
+    m_key: R2B
+  - m_input: R3(PS4)
+    m_key: R3
+  - m_input: Share(PS4)
+    m_key: Share
+  - m_input: Options(PS4)
+    m_key: Options
+  - m_input: PS(PS4)
+    m_key: PS
+  - m_input: PadPress(PS4)
+    m_key: PadPress
+  - m_input: LeftStickX(PS4)
+    m_key: LeftStickX
+  - m_input: LeftStickY(PS4)
+    m_key: LeftStickY
+  - m_input: RightStickX(PS4)
+    m_key: RightStickX
+  - m_input: RightStickY(PS4)
+    m_key: RightStickY
+  - m_input: DPadX(PS4)
+    m_key: DPadX
+  - m_input: DPadY(PS4)
+    m_key: DPadY
+  m_keyNames:
+  - X
+  - Square
+  - Circle
+  - Triangle
+  - L1
+  - L2A
+  - L2B
+  - L3
+  - R1
+  - R2A
+  - R2B
+  - R3
+  - Share
+  - Options
+  - PS
+  - PadPress
+  - LeftStickX
+  - LeftStickY
+  - RightStickX
+  - RightStickY
+  - DPadX
+  - DPadY
+  m_defaultActionCount: 5
+  m_defaultAction:
+  - m_name: Horizontal
+    m_button:
+      m_input: LeftStickX(PS4)
+      m_key: LeftStickX
+  - m_name: Vertical
+    m_button:
+      m_input: LeftStickY(PS4)
+      m_key: LeftStickY
+  - m_name: Jump
+    m_button:
+      m_input: X(PS4)
+      m_key: X
+  - m_name: Pause
+    m_button:
+      m_input: Options(PS4)
+      m_key: Options
+  - m_name: Menu
+    m_button:
+      m_input: PadPress(PS4)
+      m_key: PadPress
+  m_customActionCount: 9
+  m_customAction:
+  - m_name: Accelerate
+    m_button:
+      m_input: R2A(PS4)
+      m_key: R2A
+  - m_name: Deccelerate
+    m_button:
+      m_input: L2A(PS4)
+      m_key: L2A
+  - m_name: Attach
+    m_button:
+      m_input: Circle(PS4)
+      m_key: Circle
+  - m_name: Unattach
+    m_button:
+      m_input: Circle(PS4)
+      m_key: Circle
+  - m_name: Store
+    m_button:
+      m_input: Triangle(PS4)
+      m_key: Triangle
+  - m_name: RightHorizontal
+    m_button:
+      m_input: RightStickX(PS4)
+      m_key: RightStickX
+  - m_name: RightVertical
+    m_button:
+      m_input: RightStickY(PS4)
+      m_key: RightStickY
+  - m_name: Increment
+    m_button:
+      m_input: R1(PS4)
+      m_key: R1
+  - m_name: Decrement
+    m_button:
+      m_input: L1(PS4)
+      m_key: L1

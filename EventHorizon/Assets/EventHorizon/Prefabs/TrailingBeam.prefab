@@ -1,0 +1,170 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1000014225990938}
+  m_IsPrefabParent: 1
+--- !u!1 &1000011902360026
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 4000012299052420}
+  m_Layer: 0
+  m_Name: MassHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1000014225990938
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 4000013442285560}
+  - 114: {fileID: 114000014076343710}
+  - 114: {fileID: 114000013259524412}
+  m_Layer: 0
+  m_Name: TrailingBeam
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4000012299052420
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011902360026}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 4000013442285560}
+  m_RootOrder: 0
+--- !u!4 &4000013442285560
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000014225990938}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children:
+  - {fileID: 4000012299052420}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!114 &114000013259524412
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000014225990938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20922c64989a67d489796eae086b8aa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_castShadows: 0
+  m_receiveShadows: 0
+  m_motionVectors: 1
+  m_materials:
+  - {fileID: 2100000, guid: 2f232b581b8c2fe4c8670faa9824929d, type: 2}
+  m_lightProbes: 0
+  m_reflectionProbes: 0
+  m_positions: []
+  m_vertices: []
+  m_uvs: []
+  m_colours: []
+  m_triangles: 
+  m_useWorldSpace: 1
+  m_backfaceCulling: 0
+  m_interpolationLevel: 0
+  m_minimumWidth: 1
+  m_maximumWidth: 1
+  m_widthOverLength:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  m_startColour: {r: 0.15862082, g: 0, b: 1, a: 1}
+  m_endColour: {r: 0, g: 0.91724133, b: 1, a: 1}
+  m_colourOverLength:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 10
+    - time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 10
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+--- !u!114 &114000014076343710
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000014225990938}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f0a7b3d04e8cf3489c96b13e60b78c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_masses: []
+  m_springs: []
+  m_massPrefab: {fileID: 1000011136058278, guid: e4b6cbb1eeaa8524e882f17250c168cd,
+    type: 2}
+  m_massHolder: {fileID: 4000012299052420}
+  m_meshID: 0
+  m_springCoefficient: 15
+  m_interpolationLevel: 10
+  m_resistanceCoefficient: 10
+  m_resistanceMinimum: 50
+  m_resistance: 100
+  m_inDeadZone: 0
+  m_minimumMass: 3
+  m_useSetLength: 1
+  m_setLength: 20
+  m_meshHasSnapped: 0
+  m_allowSnapping: 0
+  m_maxDistance: 50
+  m_useDeadZone: 0
+  m_minimumDistanceThreshold: 10
+  m_maximumDistanceThreshold: 40
+  m_lockedAnchor: 0
+  m_anchor: {fileID: 0}
+  m_target: {fileID: 0}
+  m_startingTargetMass: 0
