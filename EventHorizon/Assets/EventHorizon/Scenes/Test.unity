@@ -200,8 +200,51 @@ Transform:
   - {fileID: 790672757}
   - {fileID: 80424246}
   - {fileID: 74267192}
+  - {fileID: 1719252567}
   m_Father: {fileID: 0}
   m_RootOrder: 7
+--- !u!1001 &403904568
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 295440151}
+    m_Modifications:
+    - target: {fileID: 4000012320235884, guid: 57ef50bad867f7a40a42090dac92a691, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -7.6701946
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000012320235884, guid: 57ef50bad867f7a40a42090dac92a691, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -23.866531
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000012320235884, guid: 57ef50bad867f7a40a42090dac92a691, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 7.1470804
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000012320235884, guid: 57ef50bad867f7a40a42090dac92a691, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000012320235884, guid: 57ef50bad867f7a40a42090dac92a691, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000012320235884, guid: 57ef50bad867f7a40a42090dac92a691, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000012320235884, guid: 57ef50bad867f7a40a42090dac92a691, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000012320235884, guid: 57ef50bad867f7a40a42090dac92a691, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 57ef50bad867f7a40a42090dac92a691, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &454433145
 GameObject:
   m_ObjectHideFlags: 0
@@ -1003,6 +1046,11 @@ MonoBehaviour:
   m_lineMaterial: {fileID: 2100000, guid: 2f232b581b8c2fe4c8670faa9824929d, type: 2}
   m_highlightStart: {r: 0.9818748, g: 0.99264705, b: 0.2116674, a: 1}
   m_highlightEnd: {r: 1, g: 0.7294118, b: 0.32352942, a: 1}
+--- !u!4 &1719252567 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4000012320235884, guid: 57ef50bad867f7a40a42090dac92a691,
+    type: 2}
+  m_PrefabInternal: {fileID: 403904568}
 --- !u!1 &1832474046
 GameObject:
   m_ObjectHideFlags: 0

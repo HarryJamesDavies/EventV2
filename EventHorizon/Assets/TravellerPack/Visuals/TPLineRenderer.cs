@@ -4,21 +4,6 @@ using UnityEngine.Rendering;
 
 public class TPLineRenderer : MonoBehaviour
 {
-    public class Quad
-    {
-        public Vector3 aPos;
-        public Color aCol;
-
-        public Vector3 bPos;
-        public Color bCol;
-
-        public Vector3 cPos;
-        public Color cCol;
-
-        public Vector3 dPos;
-        public Color dCol;
-    };
-
     private Mesh m_mesh;
     private GameObject m_meshObject;
 
@@ -30,18 +15,19 @@ public class TPLineRenderer : MonoBehaviour
     public ReflectionProbeUsage m_reflectionProbes = ReflectionProbeUsage.Off;
 
     public List<Vector3> m_positions = new List<Vector3>();
+    public List<Vector3> m_internalPositions = new List<Vector3>();
     public List<Vector3> m_vertices = new List<Vector3>();
-    public List<Vector2> m_uvs = new List<Vector2>();
-    public List<Color> m_colours = new List<Color>();
-    public List<int> m_triangles = new List<int>();
+    private List<Vector2> m_uvs = new List<Vector2>();
+    private List<Color> m_colours = new List<Color>();
+    private List<int> m_triangles = new List<int>();
 
     private float m_totalLineLength = 1.0f;
 
     public bool m_useWorldSpace = true;
     public bool m_backfaceCulling = false;
 
-    [Range(0, 10)]
-    public int m_interpolationLevel = 0;
+    [Range(1, 10)]
+    public int m_interpolationLevel = 1;
 
     public float m_minimumWidth = 1.0f;
     public float m_maximumWidth = 1.0f;
@@ -93,6 +79,7 @@ public class TPLineRenderer : MonoBehaviour
     void ResetLists()
     {
         m_positions.Clear();
+        m_internalPositions.Clear();
         m_vertices.Clear();
         m_uvs.Clear();
         m_colours.Clear();
@@ -148,8 +135,8 @@ public class TPLineRenderer : MonoBehaviour
             vertexCount /= 2;
         }
 
-        Vector3 pointA = m_positions[0];
-        Vector3 pointB = m_positions[1];
+        Vector3 pointA = m_vertices[0];
+        Vector3 pointB = m_vertices[1];
         float length = 0.0f;
 
         for (int iter = 0; iter <= vertexCount - 1; iter++)
@@ -193,30 +180,69 @@ public class TPLineRenderer : MonoBehaviour
             m_positions.Add(position);
         }
 
-        if (m_interpolationLevel == 0)
+        if (m_interpolationLevel == 1 || m_positions.Count < 3)
         {
-            NonIterpolationVertices();
+            GenerateNonIterpolatedInterals();
         }
+        else
+        {
+            GenerateInterpolatedInternals();
+        }
+
+        GenerateVertices();
 
         UpdateMesh();
     }
 
-    void NonIterpolationVertices()
+    void GenerateNonIterpolatedInterals()
+    { 
+        foreach(Vector3 position in m_positions)
+        {
+            m_internalPositions.Add(new Vector3(position.x, position.y, position.z));
+        }
+    }
+
+    void GenerateInterpolatedInternals()
+    {
+        float interpolationUnit = (1.0f / 3.0f) / (m_interpolationLevel + 1);
+
+        m_internalPositions.Add(new Vector3(m_positions[0].x, m_positions[0].y, m_positions[0].z));
+
+        for(int setIter = 0; setIter <= m_positions.Count - 3; setIter++)
+        {            
+            for (int curveIter = 1; curveIter <= m_interpolationLevel; curveIter++)
+            {
+                float t = (interpolationUnit * curveIter) + (1.0f / 3.0f);
+                m_internalPositions.Add(GetPoint(m_positions[setIter], m_positions[setIter + 1], m_positions[setIter + 2], t));
+            }
+        }
+
+        int finalIndex = m_positions.Count - 1;
+
+        m_internalPositions.Add(new Vector3(m_positions[finalIndex].x, m_positions[finalIndex].y, m_positions[finalIndex].z));
+    }
+
+    public Vector3 GetPoint(Vector3 p0, Vector3 p1, Vector3 p2, float t)
+    {
+        return Vector3.Lerp(Vector3.Lerp(p0, p1, t), Vector3.Lerp(p1, p2, t), t);
+    }
+
+    void GenerateVertices()
     {
         CalculateTotalLineLength();
 
-        Vector3 pointA = m_positions[0];
-        Vector3 pointB = m_positions[1];
+        Vector3 pointA = m_internalPositions[0];
+        Vector3 pointB = m_internalPositions[1];
         float length = 0.0f;
 
-        for (int iter = 0; iter <= m_positions.Count - 1; iter++)
+        for (int iter = 0; iter <= m_internalPositions.Count - 1; iter++)
         {
             GenerateVertexPair(iter, length);
 
-            if (iter != m_positions.Count - 1)
+            if (iter != m_internalPositions.Count - 1)
             {
-                pointA = m_positions[iter];
-                pointB = m_positions[iter + 1];
+                pointA = m_internalPositions[iter];
+                pointB = m_internalPositions[iter + 1];
             }
 
             length += Vector3.Distance(pointA, pointB);
@@ -239,24 +265,24 @@ public class TPLineRenderer : MonoBehaviour
     {
         int currentIndex = _positionIndex;
         int nextIndex = _positionIndex + 1;
-        if (nextIndex == m_positions.Count)
+        if (nextIndex == m_internalPositions.Count)
         {
             nextIndex = currentIndex;
             currentIndex--;
         }
 
-        Vector3 normal = Vector3.Cross(m_positions[currentIndex], m_positions[nextIndex]);
-        Vector3 side = Vector3.Cross(normal, m_positions[nextIndex] - m_positions[currentIndex]);
+        Vector3 normal = Vector3.Cross(m_internalPositions[currentIndex], m_internalPositions[nextIndex]);
+        Vector3 side = Vector3.Cross(normal, m_internalPositions[nextIndex] - m_internalPositions[currentIndex]);
         side.Normalize();
 
         Vector3 width = (side * (CalculateWidthOverLength(_length) / 2));
         Color colour = CalculateColourOverLength(_length);
 
-        m_vertices.Add(m_positions[_positionIndex] - width);
+        m_vertices.Add(m_internalPositions[_positionIndex] - width);
         m_uvs.Add(new Vector2(m_vertices[m_vertices.Count - 1].x, m_vertices[m_vertices.Count - 1].y));
         m_colours.Add(colour);
 
-        m_vertices.Add(m_positions[_positionIndex] + width);
+        m_vertices.Add(m_internalPositions[_positionIndex] + width);
         m_uvs.Add(new Vector2(m_vertices[m_vertices.Count - 1].x, m_vertices[m_vertices.Count - 1].y));
         m_colours.Add(colour);
     }
@@ -268,7 +294,7 @@ public class TPLineRenderer : MonoBehaviour
         int vertexC;
         int vertexD;
 
-        for(int sectionIter = 1; sectionIter <= m_positions.Count - 1; sectionIter++)
+        for(int sectionIter = 1; sectionIter <= m_internalPositions.Count - 1; sectionIter++)
         {
             vertexB = vertexA + 1;
             vertexC = vertexB + 1;
@@ -306,7 +332,7 @@ public class TPLineRenderer : MonoBehaviour
         int vertexC;
         int vertexD;
 
-        for (int sectionIter = 1; sectionIter <= m_positions.Count - 1; sectionIter++)
+        for (int sectionIter = 1; sectionIter <= m_internalPositions.Count - 1; sectionIter++)
         {
             vertexB = vertexA + 1;
             vertexC = vertexB + 1;
@@ -337,12 +363,12 @@ public class TPLineRenderer : MonoBehaviour
     {
         float length = 0.0f;
 
-        Vector3 pointA = m_positions[0];
+        Vector3 pointA = m_internalPositions[0];
         Vector3 pointB = Vector3.zero;
 
-        for (int iter = 1; iter <= m_positions.Count -1; iter++)
+        for (int iter = 1; iter <= m_internalPositions.Count -1; iter++)
         {
-            pointB = m_positions[iter];
+            pointB = m_internalPositions[iter];
             length += Vector3.Distance(pointA, pointB);
             pointA = pointB;
         }

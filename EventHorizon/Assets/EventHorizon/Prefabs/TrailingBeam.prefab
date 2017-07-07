@@ -89,13 +89,11 @@ MonoBehaviour:
   m_lightProbes: 0
   m_reflectionProbes: 0
   m_positions: []
+  m_internalPositions: []
   m_vertices: []
-  m_uvs: []
-  m_colours: []
-  m_triangles: 
   m_useWorldSpace: 1
   m_backfaceCulling: 0
-  m_interpolationLevel: 0
+  m_interpolationLevel: 10
   m_minimumWidth: 1
   m_maximumWidth: 1
   m_widthOverLength:
