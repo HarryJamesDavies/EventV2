@@ -4,6 +4,7 @@ using System.Collections;
 public class Ship : Pawn
 {
     public float m_speedForce = 1.0f;
+    public float m_rotationForce = 1.0f;
     public float m_velocityLimit = 500.0f;
 
     public float m_brakingCoefficient = 1.0f;
@@ -54,6 +55,7 @@ public class Ship : Pawn
     void Movement()
     {
         float deadzone = 0.25f;
+
         Vector2 stickInput = new Vector2(Input.GetAxis(m_inputMap.GetInput("Horizontal")), Input.GetAxis(m_inputMap.GetInput("Vertical")));
         if (stickInput.magnitude < deadzone)
         {
@@ -68,10 +70,11 @@ public class Ship : Pawn
             m_forward = stickInput.normalized;
             m_forward.y = -m_forward.y;
 
-            float stickAngle = Mathf.Atan2(stickInput.y, stickInput.x) * Mathf.Rad2Deg - 90.0f;
+            float rotation = Mathf.Atan2(stickInput.y, stickInput.x) * Mathf.Rad2Deg - 90.0f;          
+
             Quaternion result = Quaternion.identity;
-            result.eulerAngles = new Vector3(0.0f, 0.0f, -stickAngle);
-            gameObject.transform.rotation = result;
+            result.eulerAngles = new Vector3(0.0f, 0.0f, -rotation);
+            gameObject.transform.rotation = Quaternion.Lerp(transform.rotation, result, Time.deltaTime * m_rotationForce);
         }
 
         m_force = m_speedForce * m_forward * ((Input.GetAxis(m_inputMap.GetInput("Accelerate")) + 1.0f) * 0.5f);
@@ -82,9 +85,5 @@ public class Ship : Pawn
     void FixedUpdate()
     {
         m_rigidBody.AddForce(m_force, ForceMode2D.Impulse);
-        if(m_rigidBody.velocity.magnitude > m_velocityLimit)
-        {
-            m_rigidBody.velocity = m_rigidBody.velocity.normalized * m_velocityLimit;
-        }
     }
 }

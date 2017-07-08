@@ -155,7 +155,7 @@ MonoBehaviour:
   m_inDeadZone: 0
   m_minimumMass: 3
   m_useSetLength: 1
-  m_setLength: 20
+  m_setLength: 30
   m_meshHasSnapped: 0
   m_allowSnapping: 0
   m_maxDistance: 50

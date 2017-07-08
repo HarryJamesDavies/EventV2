@@ -4,6 +4,8 @@ using System.Collections;
 public class BeamManipulator : MonoBehaviour
 {
     public float m_speedForce = 10.0f;
+    public float m_rotationForce = 50.0f;
+
     public float m_velocityLimit = 500.0f;
     public float m_distanceLimit = 40.0f;
     public Ship m_ship = null;
@@ -37,6 +39,19 @@ public class BeamManipulator : MonoBehaviour
             }
 
             m_force = m_speedForce * m_forward;
+
+            if(Input.GetButton(m_ship.m_inputMap.GetInput("Clockwise")))
+            {
+                Quaternion result = Quaternion.identity;
+                result.eulerAngles = new Vector3(0.0f, 0.0f, (transform.rotation.eulerAngles.z + 90.0f));
+                gameObject.transform.rotation = Quaternion.Lerp(transform.rotation, result, Time.deltaTime * (m_rotationForce / m_rigidBody.mass));
+            }
+            else if (Input.GetButton(m_ship.m_inputMap.GetInput("Anti-Clockwise")))
+            {
+                Quaternion result = Quaternion.identity;
+                result.eulerAngles = new Vector3(0.0f, 0.0f, (transform.rotation.eulerAngles.z - 90.0f));
+                gameObject.transform.rotation = Quaternion.Lerp(transform.rotation, result, Time.deltaTime * (m_rotationForce / m_rigidBody.mass));
+            }
         }
     }
 

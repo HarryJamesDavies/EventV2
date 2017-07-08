@@ -64,6 +64,7 @@ public class TractorBeamManager : MonoBehaviour
                     {
                         if (!m_poolInitialised)
                         {
+                            m_beamActive = true;
                             m_poolInitialised = true;
                             m_currentStorageBeam = 0;
                             m_tractorBeams[m_currentStorageBeam].gameObject.GetComponent<TPLineRenderer>().SetColours(m_highlightStart, m_highlightEnd);
@@ -86,14 +87,14 @@ public class TractorBeamManager : MonoBehaviour
 
     void PoolingStorageBeam()
     {   
-        if(Input.GetButtonDown(m_ship.m_inputMap.GetInput("Store")))
+        if(Input.GetButtonDown(m_ship.m_inputMap.GetInput("Unstore")))
         {
             UnstoreBeam(m_currentStorageBeam);
             m_poolInitialised = false;
             return;
         }
 
-        if (Input.GetButtonDown(m_ship.m_inputMap.GetInput("Increment")))
+        if (Input.GetButtonDown(m_ship.m_inputMap.GetInput("Store")))
         {
             m_tractorBeams[m_currentStorageBeam].gameObject.GetComponent<TPLineRenderer>().RevertColours();
             m_currentStorageBeam++;
@@ -104,16 +105,16 @@ public class TractorBeamManager : MonoBehaviour
             m_tractorBeams[m_currentStorageBeam].gameObject.GetComponent<TPLineRenderer>().SetColours(m_highlightStart, m_highlightEnd);
 
         }
-        else if (Input.GetButtonDown(m_ship.m_inputMap.GetInput("Decrement")))
-        {
-            m_tractorBeams[m_currentStorageBeam].gameObject.GetComponent<TPLineRenderer>().RevertColours();
-            m_currentStorageBeam--;
-            if (m_currentStorageBeam == -1)
-            {
-                m_currentStorageBeam = m_tractorBeams.Count - 1;
-            }
-            m_tractorBeams[m_currentStorageBeam].gameObject.GetComponent<TPLineRenderer>().SetColours(m_highlightStart, m_highlightEnd);
-        }
+        //else if (Input.GetButtonDown(m_ship.m_inputMap.GetInput("Clockwise")))
+        //{
+        //    m_tractorBeams[m_currentStorageBeam].gameObject.GetComponent<TPLineRenderer>().RevertColours();
+        //    m_currentStorageBeam--;
+        //    if (m_currentStorageBeam == -1)
+        //    {
+        //        m_currentStorageBeam = m_tractorBeams.Count - 1;
+        //    }
+        //    m_tractorBeams[m_currentStorageBeam].gameObject.GetComponent<TPLineRenderer>().SetColours(m_highlightStart, m_highlightEnd);
+        //}
     }
 
     void CheckForSnappedChains()
