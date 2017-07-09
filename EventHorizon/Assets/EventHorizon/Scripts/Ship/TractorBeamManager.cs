@@ -39,6 +39,7 @@ public class TractorBeamManager : MonoBehaviour
             {
                 if (m_currentBeam != -1)
                 {
+                    m_tractorBeams[m_currentBeam].m_target.layer = 10;
                     m_tractorBeams[m_currentBeam].ResetMass();
                     RemoveBeam(m_tractorBeams[m_currentBeam]);
                     ResetCurrentBeam();

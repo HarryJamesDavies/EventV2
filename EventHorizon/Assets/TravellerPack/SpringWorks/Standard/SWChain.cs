@@ -25,22 +25,39 @@ public class SWChain : SWMesh
     public float m_startingTargetMass = 0.0f;
     private float m_tetherMass = 5.0f;
 
+    private bool m_movingToSetPoint = false;
+    private Vector3 m_setPosition;
+    private float m_lerpRate = 20.0f;
+
     void OnEnable()
     {
         if (m_target)
         {
-            m_resistance = (m_resistanceCoefficient * 100.0f) / m_target.GetComponent<Rigidbody2D>().mass;
-            if(m_resistance < m_resistanceMinimum)
+            if(m_useSetLength)
             {
-                m_resistance = m_resistanceMinimum;
+                m_movingToSetPoint = true;
+                m_setPosition = ((m_target.transform.position - m_anchor.transform.position).normalized * m_setLength) + m_anchor.transform.position;
             }
-            CreateMasses();
-            CreateSprings();
+            else
+            {
+                Initialise();
+            }
         }
         else
         {
             Debug.LogWarning("Can't Initialise SWMesh without a target object");
         }
+    }
+
+    void Initialise()
+    {
+        m_resistance = (m_resistanceCoefficient * 100.0f) / m_target.GetComponent<Rigidbody2D>().mass;
+        if (m_resistance < m_resistanceMinimum)
+        {
+            m_resistance = m_resistanceMinimum;
+        }
+        CreateMasses();
+        CreateSprings();
     }
 
     public void ResetMass()
@@ -50,19 +67,32 @@ public class SWChain : SWMesh
 
     new
     void Update()
-    {
-        if (m_allowSnapping || m_useDeadZone)
+    {     
+        if (!m_movingToSetPoint)
         {
-            float currentLength = Mathf.Abs(Vector3.Distance(m_anchor.transform.position, m_target.transform.position));
-
-            if (m_allowSnapping)
+            if (m_allowSnapping || m_useDeadZone)
             {
-                m_meshHasSnapped = currentLength >= m_maxDistance;
+                float currentLength = Mathf.Abs(Vector3.Distance(m_anchor.transform.position, m_target.transform.position));
+
+                if (m_allowSnapping)
+                {
+                    m_meshHasSnapped = currentLength >= m_maxDistance;
+                }
+
+                if (m_useDeadZone)
+                {
+                    m_inDeadZone = (currentLength <= m_maximumDistanceThreshold && currentLength >= m_minimumDistanceThreshold);
+                }
             }
+        }
+        else
+        {
+            m_target.transform.position = Vector3.Lerp(m_target.transform.position, m_setPosition, (m_lerpRate * Time.deltaTime));
 
-            if (m_useDeadZone)
+            if(Vector3.Distance(m_target.transform.position, m_setPosition) <= 2.0f)
             {
-                m_inDeadZone = (currentLength <= m_maximumDistanceThreshold && currentLength >= m_minimumDistanceThreshold);
+                m_movingToSetPoint = false;
+                Initialise();
             }
         }
 
@@ -158,9 +188,17 @@ public class SWChain : SWMesh
 
         TPLineRenderer render = gameObject.GetComponent<TPLineRenderer>();
 
-        foreach (SWMass mass in m_masses)
+        if (!m_movingToSetPoint)
         {
-            positions.Add(mass.transform.position);
+            foreach (SWMass mass in m_masses)
+            {
+                positions.Add(mass.transform.position);
+            }            
+        }
+        else
+        {
+            positions.Add(m_anchor.transform.position);
+            positions.Add(m_target.transform.position);
         }
 
         render.SetPositions(positions.ToArray());
