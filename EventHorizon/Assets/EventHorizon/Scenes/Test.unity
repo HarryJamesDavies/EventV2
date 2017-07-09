@@ -1270,10 +1270,10 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 971777692}
-  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.6, y: 0.6, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 1365765451}
   m_RootOrder: 0
@@ -1602,9 +1602,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8af4402567833f54788c3a1bd722046c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_beamSpeed: 10
-  m_beamLifeLength: 50
-  m_beamMaxDistance: 500
+  m_beamSpeed: 15
+  m_beamMaxDistance: 50
+  m_offset: 3
   m_manipulatorBeam: {fileID: 1000012443593060, guid: bdc0cecadca9f9e419d815afdd44d7f4,
     type: 2}
   m_trailingBeam: {fileID: 1000014225990938, guid: 6d8d137762160cf47896f12b2c00237f,
@@ -1612,10 +1612,6 @@ MonoBehaviour:
   m_projectile: {fileID: 1000010992458632, guid: 7668ac94534981c4a816ff391e882f56,
     type: 2}
   m_ship: {fileID: 543854827}
-  m_currentBeam: -1
-  m_tractorBeams: []
-  m_beamActive: 0
-  m_lineMaterial: {fileID: 2100000, guid: 2f232b581b8c2fe4c8670faa9824929d, type: 2}
   m_highlightStart: {r: 0.9818748, g: 0.99264705, b: 0.2116674, a: 1}
   m_highlightEnd: {r: 1, g: 0.7294118, b: 0.32352942, a: 1}
 --- !u!1 &1691112187

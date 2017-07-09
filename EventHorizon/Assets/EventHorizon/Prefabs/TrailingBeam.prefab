@@ -89,26 +89,24 @@ MonoBehaviour:
   m_lightProbes: 0
   m_reflectionProbes: 0
   m_positions: []
-  m_internalPositions: []
-  m_vertices: []
   m_useWorldSpace: 1
   m_backfaceCulling: 0
   m_interpolationLevel: 10
   m_minimumWidth: 1
-  m_maximumWidth: 1
+  m_maximumWidth: 2
   m_widthOverLength:
     serializedVersion: 2
     m_Curve:
     - time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 10
     - time: 1
       value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0

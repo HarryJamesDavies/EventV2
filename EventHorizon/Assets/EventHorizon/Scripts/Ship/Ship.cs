@@ -67,14 +67,17 @@ public class Ship : Pawn
             m_rigidBody.angularDrag = 1.5f;
 
             stickInput = stickInput.normalized * ((stickInput.magnitude - deadzone) / (1 - deadzone));
-            m_forward = stickInput.normalized;
-            m_forward.y = -m_forward.y;
 
-            float rotation = Mathf.Atan2(stickInput.y, stickInput.x) * Mathf.Rad2Deg - 90.0f;          
+            float rotation = Mathf.Atan2(stickInput.y, stickInput.x) * Mathf.Rad2Deg;          
 
             Quaternion result = Quaternion.identity;
             result.eulerAngles = new Vector3(0.0f, 0.0f, -rotation);
             gameObject.transform.rotation = Quaternion.Lerp(transform.rotation, result, Time.deltaTime * m_rotationForce);
+
+            float angle = gameObject.transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
+            m_forward.x = Mathf.Cos(angle);
+            m_forward.y = Mathf.Sin(angle);
+            m_forward.Normalize();
         }
 
         m_force = m_speedForce * m_forward * ((Input.GetAxis(m_inputMap.GetInput("Accelerate")) + 1.0f) * 0.5f);

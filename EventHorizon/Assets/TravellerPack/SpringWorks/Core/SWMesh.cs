@@ -25,8 +25,7 @@ public class SWMesh : MonoBehaviour
     [HideInInspector]
     public bool m_inDeadZone = false;
 
-
-    void Awake()
+    void Start()
     {
         m_meshID = SWManager.Instance.GenerateID();
     }

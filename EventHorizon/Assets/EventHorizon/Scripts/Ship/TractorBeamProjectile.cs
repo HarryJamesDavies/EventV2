@@ -5,21 +5,28 @@ public class TractorBeamProjectile : MonoBehaviour
 {
     private float m_maxDistance;
     private float m_speed;
-    private float m_remainingLife;
+    private Transform m_origin;
     private Vector2 m_spawnPoint;
     private Vector2 m_direction;
     private Rigidbody2D m_rigidBody;
     private TractorBeamManager m_manager;
     private bool m_travelling = true;
+    private bool m_returning = false;
 
-    public void Initialise(TractorBeamManager _manager, Vector2 _spawnPoint, Vector2 _direction, float _speed, float _remainingLife, float _maxDistance)
+    private TPLineRenderer m_render;
+
+    public void Initialise(TractorBeamManager _manager, Transform _origin, Vector2 _direction, float _speed, float _maxDistance)
     {
-        m_spawnPoint = _spawnPoint;
-        m_direction = _direction;
+        m_origin = _origin;
+        m_spawnPoint = m_origin.position;
+        m_direction = _direction.normalized;
         m_speed = _speed;
-        m_remainingLife = _remainingLife;
         m_maxDistance = _maxDistance;
         m_manager = _manager;
+
+        m_render = GetComponent<TPLineRenderer>();
+        Vector3[] positions = { m_origin.transform.position, transform.position };
+        m_render.SetPositions(positions);
     }
 
     void Start()
@@ -31,20 +38,40 @@ public class TractorBeamProjectile : MonoBehaviour
     {
         if (m_travelling)
         {
-            m_remainingLife -= Time.deltaTime;
-            if ((Vector3.Distance(transform.position, m_spawnPoint) >= m_maxDistance) || (m_remainingLife <= 0.0f))
+            if (m_returning)
             {
-                m_manager.m_beamActive = false;
-                Destroy(gameObject);
+                if (Vector3.Distance(transform.position, m_origin.position) <= 5.0f)
+                {
+                    m_manager.BeamReturned();
+                    Destroy(gameObject);
+                }
             }
+            else
+            {
+                if (Vector3.Distance(transform.position, m_spawnPoint) >= m_maxDistance)
+                {
+                    m_returning = true;
+                }
+            }
+
+            Vector3[] positions = { m_origin.transform.position, transform.position };
+            m_render.SetPositions(positions);
+        }
+    }
+
+    void LateUpdate()
+    {
+        if (m_returning)
+        {
+            m_direction = (m_origin.position - transform.position).normalized;
         }
     }
 
     void FixedUpdate()
     {
         if (m_travelling)
-        {
-            m_rigidBody.AddForce(m_direction.normalized * m_speed, ForceMode2D.Impulse);
+        {         
+            m_rigidBody.AddForce(m_direction * m_speed, ForceMode2D.Impulse);
         }
     }
 
@@ -59,7 +86,7 @@ public class TractorBeamProjectile : MonoBehaviour
             _collision.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             _collision.gameObject.GetComponent<Rigidbody2D>().angularVelocity = 0.0f;
             _collision.gameObject.layer = 11;
-            gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            gameObject.GetComponent<CircleCollider2D>().enabled = false;
             m_manager.CreateBeam(_collision.gameObject, true);
             Destroy(gameObject);
         }

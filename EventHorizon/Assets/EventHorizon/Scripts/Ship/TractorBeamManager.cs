@@ -6,20 +6,17 @@ using System.Collections.Generic;
 public class TractorBeamManager : MonoBehaviour
 {
     public float m_beamSpeed = 10.0f;
-    public float m_beamLifeLength = 20.0f;
     public float m_beamMaxDistance = 20.0f;
+    public float m_offset = 10.0f;
     public GameObject m_manipulatorBeam;
     public GameObject m_trailingBeam;
     public GameObject m_projectile;
     public Ship m_ship;
 
-    public int m_currentBeam = -1;
-    public List<SWChain> m_tractorBeams = new List<SWChain>();
+    private int m_currentBeam = -1;
+    private List<SWChain> m_tractorBeams = new List<SWChain>();
 
-    [HideInInspector]
-    public bool m_beamActive = false;
-
-    public Material m_lineMaterial;
+    private bool m_beamActive = false;
 
     public Color m_highlightStart;
     public Color m_highlightEnd;
@@ -34,8 +31,9 @@ public class TractorBeamManager : MonoBehaviour
             if (Input.GetButtonDown(m_ship.m_inputMap.GetInput("Attach")) && !m_beamActive)
             {
                 m_beamActive = true;
-                GameObject projectile = Instantiate(m_projectile, m_ship.transform.position, Quaternion.identity) as GameObject;
-                projectile.GetComponent<TractorBeamProjectile>().Initialise(this, m_ship.transform.position, m_ship.m_forward, m_beamSpeed, m_beamLifeLength, m_beamMaxDistance);
+                Vector3 forward = (m_ship.m_forward * m_offset);
+                GameObject projectile = Instantiate(m_projectile, (m_ship.transform.position + forward), Quaternion.identity) as GameObject;
+                projectile.GetComponent<TractorBeamProjectile>().Initialise(this, m_ship.transform, m_ship.m_forward, m_beamSpeed, m_beamMaxDistance);
             }
             else if (Input.GetButtonDown(m_ship.m_inputMap.GetInput("Unattach")))
             {
@@ -85,6 +83,11 @@ public class TractorBeamManager : MonoBehaviour
         CheckForSnappedChains();
     }
 
+    public void BeamReturned()
+    {
+        m_beamActive = false;
+    }
+
     void PoolingStorageBeam()
     {   
         if(Input.GetButtonDown(m_ship.m_inputMap.GetInput("Unstore")))
@@ -105,16 +108,6 @@ public class TractorBeamManager : MonoBehaviour
             m_tractorBeams[m_currentStorageBeam].gameObject.GetComponent<TPLineRenderer>().SetColours(m_highlightStart, m_highlightEnd);
 
         }
-        //else if (Input.GetButtonDown(m_ship.m_inputMap.GetInput("Clockwise")))
-        //{
-        //    m_tractorBeams[m_currentStorageBeam].gameObject.GetComponent<TPLineRenderer>().RevertColours();
-        //    m_currentStorageBeam--;
-        //    if (m_currentStorageBeam == -1)
-        //    {
-        //        m_currentStorageBeam = m_tractorBeams.Count - 1;
-        //    }
-        //    m_tractorBeams[m_currentStorageBeam].gameObject.GetComponent<TPLineRenderer>().SetColours(m_highlightStart, m_highlightEnd);
-        //}
     }
 
     void CheckForSnappedChains()

@@ -15,8 +15,8 @@ public class TPLineRenderer : MonoBehaviour
     public ReflectionProbeUsage m_reflectionProbes = ReflectionProbeUsage.Off;
 
     public List<Vector3> m_positions = new List<Vector3>();
-    public List<Vector3> m_internalPositions = new List<Vector3>();
-    public List<Vector3> m_vertices = new List<Vector3>();
+    private List<Vector3> m_internalPositions = new List<Vector3>();
+    private List<Vector3> m_vertices = new List<Vector3>();
     private List<Vector2> m_uvs = new List<Vector2>();
     private List<Color> m_colours = new List<Color>();
     private List<int> m_triangles = new List<int>();
@@ -45,7 +45,7 @@ public class TPLineRenderer : MonoBehaviour
 
         m_meshObject = new GameObject(name + "Line");
         m_meshObject.transform.SetParent(transform);
-        m_meshObject.hideFlags = HideFlags.HideInHierarchy;
+       // m_meshObject.hideFlags = HideFlags.HideInHierarchy;
 
         MeshFilter meshFilter = m_meshObject.AddComponent<MeshFilter>();
         meshFilter.mesh = m_mesh;

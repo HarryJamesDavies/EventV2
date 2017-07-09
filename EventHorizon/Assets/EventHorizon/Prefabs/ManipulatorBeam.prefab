@@ -89,33 +89,29 @@ MonoBehaviour:
   m_lightProbes: 0
   m_reflectionProbes: 0
   m_positions: []
-  m_vertices: []
-  m_uvs: []
-  m_colours: []
-  m_triangles: 
   m_useWorldSpace: 1
   m_backfaceCulling: 0
   m_interpolationLevel: 0
   m_minimumWidth: 1
-  m_maximumWidth: 1
+  m_maximumWidth: 2
   m_widthOverLength:
     serializedVersion: 2
     m_Curve:
     - time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 10
     - time: 1
       value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  m_startColour: {r: 0.0075692115, g: 0.5147059, b: 0.07402167, a: 1}
-  m_endColour: {r: 0.40689635, g: 0.928, b: 0, a: 1}
+  m_startColour: {r: 0, g: 0.50980395, b: 0.078431375, a: 1}
+  m_endColour: {r: 0.39215687, g: 0.9411765, b: 0, a: 1}
   m_colourOverLength:
     serializedVersion: 2
     m_Curve:
@@ -160,7 +156,7 @@ MonoBehaviour:
   m_setLength: 20
   m_meshHasSnapped: 0
   m_allowSnapping: 1
-  m_maxDistance: 70
+  m_maxDistance: 100
   m_useDeadZone: 1
   m_minimumDistanceThreshold: 10
   m_maximumDistanceThreshold: 50
