@@ -480,6 +480,7 @@ GameObject:
   - 81: {fileID: 454433146}
   - 50: {fileID: 454433152}
   - 114: {fileID: 454433151}
+  - 45: {fileID: 454433153}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -586,6 +587,14 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!45 &454433153
+Skybox:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 454433145}
+  m_Enabled: 0
+  m_CustomSkybox: {fileID: 2100000, guid: 4d651433b4632e94a90f7593bce27828, type: 2}
 --- !u!1 &470197872
 GameObject:
   m_ObjectHideFlags: 0
