@@ -8,6 +8,7 @@ public class TractorBeamManager : MonoBehaviour
     public float m_beamSpeed = 10.0f;
     public float m_beamMaxDistance = 20.0f;
     public float m_offset = 10.0f;
+    public GameObject m_manipulatorObject;
     public GameObject m_manipulatorBeam;
     public GameObject m_trailingBeam;
     public GameObject m_projectile;
@@ -151,7 +152,9 @@ public class TractorBeamManager : MonoBehaviour
         if (_beam.m_target.GetComponent<SWMass>().RemoveChainID(_beam.m_meshID))
         {
             _beam.m_target.layer = 10;
-            Destroy(_beam.m_target.GetComponent<BeamManipulator>());
+            Destroy(_beam.m_target.GetComponent<FollowObject>());
+            m_manipulatorObject.GetComponent<BeamManipulator>().enabled = false;
+            //Destroy(_beam.m_target.GetComponent<BeamManipulator>());
             Destroy(_beam.m_target.GetComponent<SWMass>());
         }
 
@@ -165,7 +168,10 @@ public class TractorBeamManager : MonoBehaviour
         if (_manipulate)
         {
             beam = Instantiate(m_manipulatorBeam, m_ship.transform.position, Quaternion.identity) as GameObject;
-            _target.AddComponent<BeamManipulator>().m_ship = m_ship;
+            _target.AddComponent<FollowObject>().Initialise(m_manipulatorObject.transform, m_ship.transform, true);
+            m_manipulatorObject.GetComponent<BeamManipulator>().m_ship = m_ship;
+            m_manipulatorObject.GetComponent<BeamManipulator>().enabled = true;
+            //_target.AddComponent<BeamManipulator>().m_ship = m_ship;
 
             m_currentBeam = m_tractorBeams.Count;
             if(m_poolInitialised)
@@ -192,7 +198,9 @@ public class TractorBeamManager : MonoBehaviour
 
     public void StoreBeam(int _beamIndex)
     {
-        Destroy(m_tractorBeams[_beamIndex].m_target.GetComponent<BeamManipulator>());
+        m_manipulatorObject.GetComponent<BeamManipulator>().enabled = false;
+        Destroy(m_tractorBeams[_beamIndex].m_target.GetComponent<FollowObject>());
+        //Destroy(m_tractorBeams[_beamIndex].m_target.GetComponent<BeamManipulator>());
         CreateBeam(m_tractorBeams[_beamIndex].m_target, false, m_tractorBeams[_beamIndex].m_startingTargetMass);
         RemoveBeam(m_tractorBeams[_beamIndex]);
     }

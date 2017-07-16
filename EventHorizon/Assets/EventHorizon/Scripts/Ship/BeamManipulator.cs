@@ -10,7 +10,7 @@ public class BeamManipulator : MonoBehaviour
     public float m_distanceLimit = 40.0f;
     public Ship m_ship = null;
 
-    private Vector2 m_forward = new Vector2(0.0f, -1.0f);
+    //private Vector2 m_forward = new Vector2(0.0f, -1.0f);
     private Rigidbody2D m_rigidBody;
     private Vector3 m_force = Vector3.zero;
 
@@ -24,21 +24,21 @@ public class BeamManipulator : MonoBehaviour
     {
         if (m_ship.m_inputMap)
         {
-            float deadzone = 0.25f;
-            Vector2 stickInput = new Vector2(Input.GetAxis(m_ship.m_inputMap.GetInput("RightHorizontal")), Input.GetAxis(m_ship.m_inputMap.GetInput("RightVertical")));
-            if (stickInput.magnitude < deadzone)
-            {
-                stickInput = Vector2.zero;
-                m_forward = stickInput;
-            }
-            else
-            {
-                stickInput = stickInput.normalized * ((stickInput.magnitude - deadzone) / (1 - deadzone));
-                m_forward = stickInput.normalized;
-                m_forward.y = -m_forward.y;
-            }
+            //float deadzone = 0.25f;
+            //Vector2 stickInput = new Vector2(Input.GetAxis(m_ship.m_inputMap.GetInput("RightHorizontal")), Input.GetAxis(m_ship.m_inputMap.GetInput("RightVertical")));
+            //if (stickInput.magnitude < deadzone)
+            //{
+            //    stickInput = Vector2.zero;
+            //    m_forward = stickInput;
+            //}
+            //else
+            //{
+            //    stickInput = stickInput.normalized * ((stickInput.magnitude - deadzone) / (1 - deadzone));
+            //    m_forward = stickInput.normalized;
+            //    m_forward.y = -m_forward.y;
+            //}
 
-            m_force = m_speedForce * m_forward;
+            //m_force = m_speedForce * m_forward;
 
             if(Input.GetButton(m_ship.m_inputMap.GetInput("Clockwise")))
             {

@@ -91,7 +91,7 @@ MonoBehaviour:
   m_positions: []
   m_useWorldSpace: 1
   m_backfaceCulling: 0
-  m_interpolationLevel: 0
+  m_interpolationLevel: 3
   m_minimumWidth: 1
   m_maximumWidth: 2
   m_widthOverLength:
@@ -151,7 +151,7 @@ MonoBehaviour:
   m_resistanceMinimum: 50
   m_resistance: 100
   m_inDeadZone: 0
-  m_minimumMass: 15
+  m_minimumMass: 2
   m_useSetLength: 0
   m_setLength: 20
   m_meshHasSnapped: 0
