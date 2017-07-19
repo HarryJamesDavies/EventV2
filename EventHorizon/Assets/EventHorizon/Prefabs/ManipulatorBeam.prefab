@@ -91,7 +91,7 @@ MonoBehaviour:
   m_positions: []
   m_useWorldSpace: 1
   m_backfaceCulling: 0
-  m_interpolationLevel: 3
+  m_interpolationLevel: 10
   m_minimumWidth: 1
   m_maximumWidth: 2
   m_widthOverLength:
@@ -143,23 +143,23 @@ MonoBehaviour:
   m_springs: []
   m_massPrefab: {fileID: 1000011136058278, guid: e4b6cbb1eeaa8524e882f17250c168cd,
     type: 2}
-  m_massHolder: {fileID: 0}
+  m_massHolder: {fileID: 4000012299052420, guid: 6d8d137762160cf47896f12b2c00237f,
+    type: 2}
   m_meshID: 0
   m_springCoefficient: 1
   m_interpolationLevel: 1
-  m_resistanceCoefficient: 10
+  m_resistanceCoefficient: 100
   m_resistanceMinimum: 50
-  m_resistance: 100
   m_inDeadZone: 0
-  m_minimumMass: 2
+  m_minimumMass: 5
   m_useSetLength: 0
-  m_setLength: 20
+  m_setLength: 30
   m_meshHasSnapped: 0
   m_allowSnapping: 1
-  m_maxDistance: 100
+  m_maxDistance: 120
   m_useDeadZone: 1
   m_minimumDistanceThreshold: 10
-  m_maximumDistanceThreshold: 50
+  m_maximumDistanceThreshold: 40
   m_lockedAnchor: 1
   m_anchor: {fileID: 0}
   m_target: {fileID: 0}

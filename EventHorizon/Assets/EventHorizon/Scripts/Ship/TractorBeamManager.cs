@@ -8,11 +8,14 @@ public class TractorBeamManager : MonoBehaviour
     public float m_beamSpeed = 10.0f;
     public float m_beamMaxDistance = 20.0f;
     public float m_offset = 10.0f;
+    public float m_velocityCap = 100.0f;
+
     public GameObject m_manipulatorObject;
     public GameObject m_manipulatorBeam;
     public GameObject m_trailingBeam;
     public GameObject m_projectile;
     public Ship m_ship;
+    private Rigidbody2D m_shipRigidBody;
 
     private int m_currentBeam = -1;
     private List<SWChain> m_tractorBeams = new List<SWChain>();
@@ -24,6 +27,16 @@ public class TractorBeamManager : MonoBehaviour
 
     private int m_currentStorageBeam = 0;
     private bool m_poolInitialised = false;
+
+    void Start()
+    {
+        m_shipRigidBody = m_ship.GetComponent<Rigidbody2D>();
+    }
+
+    void OnEnable()
+    {
+        m_shipRigidBody = m_ship.GetComponent<Rigidbody2D>();
+    }
 
     void Update ()
     {
@@ -77,12 +90,36 @@ public class TractorBeamManager : MonoBehaviour
                     ResetCurrentBeam();
                 }
             }
+
+            if(Input.GetButtonDown(m_ship.m_inputMap.GetInput("Fire")) && m_manipulatorObject.GetComponent<BeamManipulator>().m_contracted)
+            {
+                m_manipulatorObject.GetComponent<BeamManipulator>().FireContractedObject();
+                m_tractorBeams[m_currentBeam].m_target.layer = 10;
+                m_tractorBeams[m_currentBeam].ResetMass();
+                RemoveBeam(m_tractorBeams[m_currentBeam]);
+                ResetCurrentBeam();
+            }
+
+            if (Input.GetButtonDown(m_ship.m_inputMap.GetInput("Fire")) && m_manipulatorObject.GetComponent<BeamManipulator>().m_charged)
+            {
+                m_manipulatorObject.GetComponent<BeamManipulator>().FireChargedObject();
+                m_tractorBeams[m_currentBeam].m_target.layer = 10;
+                m_tractorBeams[m_currentBeam].ResetMass();
+                RemoveBeam(m_tractorBeams[m_currentBeam]);
+                ResetCurrentBeam();
+            }
         }
 	}
 
     void LateUpdate()
     {
         CheckForSnappedChains();
+
+        if((m_shipRigidBody.velocity.magnitude > m_velocityCap) && (m_currentBeam != -1))
+        {
+            StoreBeam(m_currentBeam);
+            ResetCurrentBeam();
+        }
     }
 
     public void BeamReturned()
@@ -142,7 +179,7 @@ public class TractorBeamManager : MonoBehaviour
         m_beamActive = false;
     }
 
-    public void RemoveBeam(SWChain _beam)
+    public void RemoveBeam(SWChain _beam, bool _removeManip = true)
     {
         if (_beam.m_anchor.GetComponent<SWMass>().RemoveChainID(_beam.m_meshID))
         {
@@ -152,10 +189,14 @@ public class TractorBeamManager : MonoBehaviour
         if (_beam.m_target.GetComponent<SWMass>().RemoveChainID(_beam.m_meshID))
         {
             _beam.m_target.layer = 10;
-            Destroy(_beam.m_target.GetComponent<FollowObject>());
-            m_manipulatorObject.GetComponent<BeamManipulator>().enabled = false;
-            //Destroy(_beam.m_target.GetComponent<BeamManipulator>());
             Destroy(_beam.m_target.GetComponent<SWMass>());
+        }
+
+        if(_removeManip)
+        {
+            m_manipulatorObject.GetComponent<BeamManipulator>().m_followObject = null;
+            m_manipulatorObject.GetComponent<BeamManipulator>().enabled = false;
+            Destroy(_beam.m_target.GetComponent<FollowObject>());
         }
 
         Destroy(_beam.gameObject);
@@ -169,9 +210,9 @@ public class TractorBeamManager : MonoBehaviour
         {
             beam = Instantiate(m_manipulatorBeam, m_ship.transform.position, Quaternion.identity) as GameObject;
             _target.AddComponent<FollowObject>().Initialise(m_manipulatorObject.transform, m_ship.transform, true);
+            m_manipulatorObject.GetComponent<BeamManipulator>().m_followObject = _target.GetComponent<FollowObject>();
             m_manipulatorObject.GetComponent<BeamManipulator>().m_ship = m_ship;
             m_manipulatorObject.GetComponent<BeamManipulator>().enabled = true;
-            //_target.AddComponent<BeamManipulator>().m_ship = m_ship;
 
             m_currentBeam = m_tractorBeams.Count;
             if(m_poolInitialised)
@@ -198,9 +239,9 @@ public class TractorBeamManager : MonoBehaviour
 
     public void StoreBeam(int _beamIndex)
     {
+        m_manipulatorObject.GetComponent<BeamManipulator>().m_followObject = null;
         m_manipulatorObject.GetComponent<BeamManipulator>().enabled = false;
         Destroy(m_tractorBeams[_beamIndex].m_target.GetComponent<FollowObject>());
-        //Destroy(m_tractorBeams[_beamIndex].m_target.GetComponent<BeamManipulator>());
         CreateBeam(m_tractorBeams[_beamIndex].m_target, false, m_tractorBeams[_beamIndex].m_startingTargetMass);
         RemoveBeam(m_tractorBeams[_beamIndex]);
     }
@@ -208,7 +249,7 @@ public class TractorBeamManager : MonoBehaviour
     void UnstoreBeam(int _beamIndex)
     {
         CreateBeam(m_tractorBeams[_beamIndex].m_target, true, m_tractorBeams[_beamIndex].m_startingTargetMass);
-        RemoveBeam(m_tractorBeams[_beamIndex]);
+        RemoveBeam(m_tractorBeams[_beamIndex], false);
         m_beamActive = true;
     }
 }

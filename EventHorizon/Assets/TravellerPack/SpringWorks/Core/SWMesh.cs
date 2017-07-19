@@ -20,7 +20,7 @@ public class SWMesh : MonoBehaviour
     public int m_interpolationLevel = 1;
     public float m_resistanceCoefficient = 10.0f;
     public float m_resistanceMinimum = 50.0f;
-    public float m_resistance = 100.0f;
+    protected float m_resistance = 100.0f;
 
     [HideInInspector]
     public bool m_inDeadZone = false;

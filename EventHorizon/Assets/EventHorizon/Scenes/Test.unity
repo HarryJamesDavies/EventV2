@@ -529,7 +529,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 55.71
+  orthographic size: 75
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -593,7 +593,7 @@ Skybox:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 454433145}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CustomSkybox: {fileID: 2100000, guid: 4d651433b4632e94a90f7593bce27828, type: 2}
 --- !u!1 &470197872
 GameObject:
@@ -756,14 +756,13 @@ MonoBehaviour:
   m_inputMap: {fileID: 0}
   m_inputType: 3
   m_speedForce: 5
-  m_rotationForce: 5
-  m_velocityLimit: 500
-  m_rotationLimit: 0.05
+  m_rotationCoefficient: 25
+  m_rotationMinimum: 10
   m_brakingCoefficient: 1
   m_torque: 0
   m_forward: {x: 0, y: -1}
-  m_rotatingClockwise: 0
-  m_rotatingAntiClockwise: 0
+  m_rotationAngle: 0
+  m_rotationSign: 0
 --- !u!4 &543854828
 Transform:
   m_ObjectHideFlags: 0
@@ -793,7 +792,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 5.7, y: 8.4}
+  m_Size: {x: 8.3, y: 5.8}
 --- !u!50 &543854830
 Rigidbody2D:
   serializedVersion: 2
@@ -804,7 +803,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 5
   m_LinearDrag: 0.1
-  m_AngularDrag: 1
+  m_AngularDrag: 10
   m_GravityScale: 0
   m_IsKinematic: 0
   m_Interpolate: 1
@@ -1442,10 +1441,10 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1189332456}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 50, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 543854828}
   m_RootOrder: 2
@@ -1460,11 +1459,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d13913236ba8daa4f882d52317fc3038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_speedForce: 10
-  m_rotationForce: 50
-  m_velocityLimit: 500
-  m_distanceLimit: 40
+  m_speedForce: 3
+  m_rotationCoefficient: 1
+  m_rotationMinimum: 10
+  m_objectDrag: 10
+  m_objectAngularDrag: 0.5
+  m_distanceMinLimit: 20
+  m_distanceMaxLimit: 70
   m_ship: {fileID: 0}
+  m_followObject: {fileID: 0}
+  m_contracted: 0
+  m_contractionTimeMax: 3
+  m_contractCoefficient: 30
+  m_charged: 0
+  m_minRotations: 2
+  m_maxRotations: 5
+  m_chargedCoefficient: 20
 --- !u!50 &1189332459
 Rigidbody2D:
   serializedVersion: 2
@@ -1682,6 +1692,7 @@ MonoBehaviour:
   m_beamSpeed: 15
   m_beamMaxDistance: 50
   m_offset: 3
+  m_velocityCap: 150
   m_manipulatorObject: {fileID: 1189332456}
   m_manipulatorBeam: {fileID: 1000012443593060, guid: bdc0cecadca9f9e419d815afdd44d7f4,
     type: 2}

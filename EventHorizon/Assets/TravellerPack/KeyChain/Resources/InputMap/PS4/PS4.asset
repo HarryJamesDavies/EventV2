@@ -134,11 +134,11 @@ MonoBehaviour:
     m_button:
       m_input: RightStickY(PS4)
       m_key: RightStickY
-  - m_name: Anti-Clockwise
+  - m_name: Fire
     m_button:
       m_input: R1(PS4)
       m_key: R1
-  - m_name: Clockwise
+  - m_name: Retract
     m_button:
       m_input: L1(PS4)
       m_key: L1
