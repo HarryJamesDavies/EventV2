@@ -181,6 +181,10 @@ public class TractorBeamManager : MonoBehaviour
 
     public void RemoveBeam(SWChain _beam, bool _removeManip = true)
     {
+        RemoveCamTargetEventData data = ScriptableObject.CreateInstance<RemoveCamTargetEventData>();
+        data.m_target = _beam.m_target.transform;
+        EventManager.m_instance.AddEvent(Events.Event.CAM_REMOVETARGET, data);
+
         if (_beam.m_anchor.GetComponent<SWMass>().RemoveChainID(_beam.m_meshID))
         {
             Destroy(_beam.m_anchor.GetComponent<SWMass>());
@@ -235,6 +239,11 @@ public class TractorBeamManager : MonoBehaviour
         beam.GetComponent<SWChain>().m_target = _target;
         beam.GetComponent<SWChain>().enabled = true;
         m_tractorBeams.Add(beam.GetComponent<SWChain>());
+
+        AddCamTargetEventData data = ScriptableObject.CreateInstance<AddCamTargetEventData>();
+        data.m_target = _target.transform;
+        data.m_weighting = 5.0f;
+        EventManager.m_instance.AddEvent(Events.Event.CAM_ADDTARGET, data);
     }
 
     public void StoreBeam(int _beamIndex)

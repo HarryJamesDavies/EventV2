@@ -20,33 +20,15 @@ public class Ship : Pawn
 
     public float m_rotationSign = 0.0f;
 
+    new
     void Start ()
     {
-        EventManager.m_instance.SubscribeToEvent(Events.Event.CO_CONTROLLERADDED, EvFunc_AssignMap);
-
         m_rigidBody = GetComponent<Rigidbody2D>();
         m_defaultDrag = m_rigidBody.drag;
 
         m_forward = new Vector2(1.0f, 0.0f);
-    }
 
-    void OnDestroy()
-    {
-        EventManager.m_instance.UnsubscribeToEvent(Events.Event.CO_CONTROLLERADDED, EvFunc_AssignMap);
-    }
-	
-    void EvFunc_AssignMap(object _data = null)
-    {
-        if (_data != null)
-        {
-            InputEnableEventData data = _data as InputEnableEventData;
-            m_inputType = data.ControllerType;
-            SetInputMap(KeyChainManager.InputMapManager.GetPresetMap(data.ControllerType, data.ControllerName), data.ControllerIndex);
-        }
-        else
-        {
-            Debug.Log("Can't set pawn InputMap with null data");
-        }
+        base.Start();
     }
 
 	void Update ()

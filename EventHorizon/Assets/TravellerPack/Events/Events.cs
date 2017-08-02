@@ -6,7 +6,7 @@ using System.Collections;
 //         ST_ = State Events              //
 //         UI_ = UI Events                 //
 //         CO_ = Controller Events         //
-//         TB_ = TracktorBeam Events       //
+//         CAM_ = Camera Events       //
 //                                         //
 /* ####################################### */
 
@@ -25,7 +25,8 @@ public class Events : MonoBehaviour
         CO_CONTROLLER3DISCONNECTED,
         CO_CONTROLLER4DISCONNECTED,
         CO_CONTROLLERADDED,
-        TB_BEAMREADY,
+        CAM_ADDTARGET,
+        CAM_REMOVETARGET,
         Count
     }
 }
